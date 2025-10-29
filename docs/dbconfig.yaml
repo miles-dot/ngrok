@@ -1,0 +1,7 @@
+database:
+  enabled: true
+  driver: "mysql"
+  dsn: "user:password@tcp(127.0.0.1:3306)/ngrok?parseTime=true"
+  maxOpenConns: 10
+  maxIdleConns: 5
+  connMaxLifetime: 300  # 秒

@@ -82,6 +82,21 @@ func NewControl(ctlConn conn.Conn, authMsg *msg.Auth) {
 		ctlConn.Close()
 	}
 
+	// 如果数据库已连接，验证token
+	if DB != nil {
+		// 尝试验证token
+		tokenInfo, err := ValidateToken(authMsg.User)
+		if err != nil {
+			failAuth(err)
+			return
+		}
+		// token不存在或已过期
+		if tokenInfo == nil {
+			failAuth(fmt.Errorf("令牌无效或已过期: %s", authMsg.User))
+			return
+		}
+	}
+
 	// register the clientid
 	c.id = authMsg.ClientId
 	if c.id == "" {

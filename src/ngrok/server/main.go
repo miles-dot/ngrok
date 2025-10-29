@@ -105,6 +105,17 @@ func Main() {
 	// init logging
 	log.LogTo(opts.logto, opts.loglevel)
 
+	// 加载配置文件
+	config, err := LoadConfig(opts.dbconfig)
+	if err != nil {
+		log.Warn("加载配置文件失败: %v", err)
+	}
+
+	// 初始化数据库连接
+	if err := InitDB(&config.Database); err != nil {
+		log.Warn("初始化数据库失败: %v", err)
+	}
+
 	// seed random number generator
 	seed, err := util.RandomSeed()
 	if err != nil {
