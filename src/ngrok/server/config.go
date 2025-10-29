@@ -1,9 +1,9 @@
 package server
 
 import (
-	"os"
+	"io/ioutil"
 
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v1"
 )
 
 // DatabaseConfig 数据库配置
@@ -23,7 +23,7 @@ type Config struct {
 
 // LoadConfig 从文件加载配置
 func LoadConfig(path string) (*Config, error) {
-	data, err := os.ReadFile(path)
+	data, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
